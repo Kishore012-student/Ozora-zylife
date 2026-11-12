@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import multer from 'multer';
 import sharp from 'sharp';
+import { v2 as cloudinary } from 'cloudinary';
 import path from 'node:path';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
@@ -191,20 +192,67 @@ router.get('/stats', requireAuth, wrap(async (req, res) => {
   res.json({ total, published, drafts: total - published, featured, byCategory: byCat, newEnquiries: newEnq, enquiries: totalEnq, credentials: creds, recentEnquiries: recentEnq });
 }));
 
-/* ---------- file upload (images compressed to webp + PDF for certificates) ---------- */
+/* ---------- file upload (Cloudinary Cloud Storage with Local Fallback) ---------- */
 export const UPLOAD_DIR = path.resolve(process.env.UPLOAD_DIR || './uploads');
 fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+
+// Configure Cloudinary if credentials are provided in env
+const useCloudinary = Boolean(process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET);
+if (useCloudinary) {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
+}
+
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 15 * 1024 * 1024 }, // allow up to 15MB input for compression
   fileFilter: (req, file, cb) => cb(/^(image\/(png|jpe?g|webp|gif|avif)|application\/pdf)$/.test(file.mimetype) ? null : new Error('Only image or PDF files are allowed'), true),
 });
+
 router.post('/upload', requireAuth, upload.single('file'), wrap(async (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'No file received' });
 
   const isPdf = req.file.mimetype === 'application/pdf';
   const baseName = `${Date.now()}-${crypto.randomBytes(4).toString('hex')}`;
 
+  // If Cloudinary is configured, upload directly to Cloudinary cloud
+  if (useCloudinary) {
+    let uploadBuffer = req.file.buffer;
+    let resourceType = isPdf ? 'raw' : 'image';
+    let format = isPdf ? 'pdf' : 'webp';
+
+    if (!isPdf) {
+      uploadBuffer = await sharp(req.file.buffer)
+        .rotate()
+        .resize({ width: 2000, height: 2000, fit: 'inside', withoutEnlargement: true })
+        .webp({ quality: 82, effort: 4 })
+        .toBuffer();
+    }
+
+    const uploadPromise = new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          folder: 'ozora',
+          public_id: baseName,
+          resource_type: resourceType,
+          format: format,
+        },
+        (error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        }
+      );
+      stream.end(uploadBuffer);
+    });
+
+    const result = await uploadPromise;
+    return res.status(201).json({ url: result.secure_url, type: isPdf ? 'application/pdf' : 'image/webp' });
+  }
+
+  // Fallback to local server disk storage if Cloudinary env is not set
   if (isPdf) {
     const filename = `${baseName}.pdf`;
     const targetPath = path.join(UPLOAD_DIR, filename);
@@ -212,14 +260,14 @@ router.post('/upload', requireAuth, upload.single('file'), wrap(async (req, res)
     return res.status(201).json({ url: `uploads/${filename}`, type: 'application/pdf' });
   }
 
-  // Compress and convert all images to optimized WebP
+  // Compress and convert all images to optimized WebP locally
   const filename = `${baseName}.webp`;
   const targetPath = path.join(UPLOAD_DIR, filename);
 
   await sharp(req.file.buffer)
-    .rotate() // auto-orient based on EXIF metadata
-    .resize({ width: 2000, height: 2000, fit: 'inside', withoutEnlargement: true }) // crisp high-res cap
-    .webp({ quality: 82, effort: 4 }) // high quality webp compression
+    .rotate()
+    .resize({ width: 2000, height: 2000, fit: 'inside', withoutEnlargement: true })
+    .webp({ quality: 82, effort: 4 })
     .toFile(targetPath);
 
   res.status(201).json({ url: `uploads/${filename}`, type: 'image/webp' });
