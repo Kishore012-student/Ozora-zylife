@@ -1,0 +1,672 @@
+/* ==========================================================================
+   OZARO ZYLIFE — LUXURY PHARMACEUTICAL FOOTER STYLES
+   Theme Palette:
+     --oz-bg-dark: #092C26
+     --oz-brand-green: #42887B
+     --oz-emerald: #00D98B
+     --oz-orange: #F48C27
+     --oz-ivory: #F7F4E8
+     --oz-white: #FCFEFF
+   ========================================================================== */
+
+/* Outer Warm Ivory Wrapper */
+.oz-footer-outer {
+  background-color: transparent;
+  padding: 80px 0 0 0;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+/* Extra top padding on all pages except contact page */
+.oz-footer-outer--extra-top {
+  padding-top: clamp(150px, 16vw, 190px);
+}
+
+/* Rounded Dark Green Main Panel — Compact Sleek Height */
+.oz-footer-panel {
+  background: radial-gradient(120% 120% at 50% 0%, #113E35 0%, #092C26 55%, #051A16 100%);
+  border-radius: clamp(32px, 5vw, 64px) clamp(32px, 5vw, 64px) 0 0;
+  position: relative;
+  color: #FCFEFF;
+  padding: clamp(2.5rem, 3.2vw, 3.4rem) clamp(1.5rem, 5vw, 5.5rem) clamp(1.2rem, 1.8vw, 1.6rem);
+  box-shadow: 
+    0 -16px 50px -10px rgba(9, 44, 38, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  border-top: 1px solid rgba(0, 217, 139, 0.2);
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Wavy Animated Contour Lines (Clipped to Panel) */
+.oz-footer-contours {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.oz-footer-contours__svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 0.8;
+}
+
+.oz-footer-interactive-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+/* Bird Feeding Lottie perched naturally on top right border of footer */
+.oz-footer-bird {
+  position: absolute;
+  top: 0;
+  right: clamp(-8rem, 8vw, 3rem);
+  transform: translateY(-75%);
+  width: clamp(120px, 14vw, 220px);
+  height: clamp(120px, 14vw, 220px);
+  pointer-events: auto; /* Active for hover & click interactions */
+  cursor: pointer;
+  z-index: 12;
+  filter: drop-shadow(0 8px 16px rgba(9, 44, 38, 0.25));
+}
+
+.oz-footer-bird__lottie {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Organic Cloud-Shaped Chirp Speech Bubble */
+.oz-bird-bubble {
+  position: absolute;
+  bottom: 84%;
+  left: 50%;
+  transform: translateX(-58%) translateY(6px) scale(0.92);
+  background: #FCFEFF;
+  color: #092C26;
+  padding: 0.65rem 1.25rem 0.75rem;
+  /* Soft organic cloud silhouette with natural scalloped curves */
+  border-radius: 28px 24px 26px 20px / 24px 28px 20px 26px;
+  font-family: 'Switzer', -apple-system, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.35;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  box-shadow: 
+    0 12px 28px -4px rgba(9, 44, 38, 0.28),
+    0 4px 12px rgba(0, 0, 0, 0.06),
+    0 0 0 1.5px rgba(0, 217, 139, 0.3);
+  transition: 
+    opacity 0.26s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.26s cubic-bezier(0.34, 1.56, 0.64, 1),
+    visibility 0.26s;
+  z-index: 20;
+}
+
+.oz-bird-bubble.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-58%) translateY(0) scale(1);
+}
+
+/* Mini cloud puff trail / droplet pointer */
+.oz-bird-bubble__tip {
+  position: absolute;
+  top: 100%;
+  left: 62%;
+  transform: translateX(-50%) translateY(2px);
+  width: 10px;
+  height: 10px;
+  background: #FCFEFF;
+  border-radius: 50%;
+  box-shadow: 
+    0 2px 4px rgba(9, 44, 38, 0.15),
+    0 0 0 1px rgba(0, 217, 139, 0.25);
+}
+
+.oz-bird-bubble__tip::after {
+  content: '';
+  position: absolute;
+  top: 9px;
+  left: 2px;
+  width: 6px;
+  height: 6px;
+  background: #FCFEFF;
+  border-radius: 50%;
+  box-shadow: 
+    0 2px 3px rgba(9, 44, 38, 0.12),
+    0 0 0 1px rgba(0, 217, 139, 0.2);
+}
+
+.oz-bird-bubble__text {
+  display: inline-block;
+  background: linear-gradient(135deg, #092C26 0%, #175245 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Overlapping Top-Center Brand Logomark with Outline Cutout (Enlarged) */
+.oz-emblem-wrap {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.oz-emblem--notch {
+  width: clamp(125px, 12vw, 168px);
+  height: clamp(125px, 12vw, 168px);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.oz-emblem__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Centered Brand Identity */
+.oz-brand-center {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  margin-top: clamp(1.4rem, 2.2vw, 2.2rem);
+  margin-bottom: clamp(1.4rem, 2vw, 2rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.oz-brand-name {
+  font-family: var(--f-display, 'Clash Display', sans-serif);
+  font-size: clamp(1.85rem, 3.2vw, 2.85rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: #FCFEFF;
+  margin: 0;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.oz-reg {
+  font-size: 0.45em;
+  vertical-align: super;
+  margin-left: 0.2rem;
+  color: #00D98B;
+  font-weight: 500;
+}
+
+.oz-brand-tagline {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+  color: rgba(247, 244, 232, 0.85);
+  margin-top: 0.35rem;
+  letter-spacing: 0.01em;
+}
+
+/* Two-Column Grid */
+.oz-footer-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  position: relative;
+  z-index: 2;
+  padding-bottom: clamp(1.4rem, 2vw, 1.8rem);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.oz-col__heading {
+  font-family: var(--f-display, 'Clash Display', sans-serif);
+  font-size: clamp(1.05rem, 1.2vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #FCFEFF;
+  margin-bottom: 1.1rem;
+}
+
+.oz-col__heading--center {
+  text-align: center;
+}
+
+/* Contact List */
+.oz-contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+}
+
+.oz-contact-item {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  color: rgba(252, 254, 255, 0.82);
+  text-decoration: none;
+  font-family: var(--f-text, 'Switzer', sans-serif);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.oz-contact-item:hover {
+  color: #00D98B;
+  transform: translateX(3px);
+}
+
+.oz-contact-icon {
+  flex-shrink: 0;
+  color: #00D98B;
+  margin-top: 0.15rem;
+}
+
+.oz-contact-text {
+  max-width: 320px;
+}
+
+/* Social Pills */
+.oz-social-section {
+  margin-top: 1.75rem;
+}
+
+.oz-social-heading {
+  font-family: var(--f-text, 'Switzer', sans-serif);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(252, 254, 255, 0.55);
+  margin-bottom: 0.75rem;
+}
+
+.oz-social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.oz-social-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  color: #FCFEFF;
+  text-decoration: none;
+  font-family: var(--f-text, 'Switzer', sans-serif);
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.oz-social-pill:hover {
+  background: rgba(0, 217, 139, 0.15);
+  border-color: #00D98B;
+  color: #00D98B;
+  transform: translateY(-2px);
+}
+
+.oz-arrow {
+  font-size: 0.9em;
+  color: #00D98B;
+  transition: transform 0.3s ease;
+}
+
+.oz-social-pill:hover .oz-arrow {
+  transform: translate(2px, -2px);
+}
+
+/* Center Column (CTA) */
+.oz-col--cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  padding: 0 1rem;
+}
+
+.oz-cta-desc {
+  font-family: var(--f-text, 'Switzer', sans-serif);
+  font-size: 0.95rem;
+  color: rgba(252, 254, 255, 0.75);
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+  max-width: 340px;
+}
+
+.oz-cta-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  width: 100%;
+  max-width: 290px;
+}
+
+/* Emerald Pill Buttons */
+.oz-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1.1rem 0.8rem 1.45rem;
+  border-radius: 999px;
+  font-family: var(--f-text, 'Switzer', sans-serif);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.oz-btn__circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.35s ease, background-color 0.35s ease;
+}
+
+.oz-btn:hover .oz-btn__circle {
+  transform: translateX(4px);
+}
+
+/* Primary: Emerald Fill */
+.oz-btn--primary {
+  background: #00D98B;
+  color: #051A16;
+  border: 1px solid #00D98B;
+}
+
+.oz-btn--primary .oz-btn__circle {
+  background: rgba(5, 26, 22, 0.15);
+  color: #051A16;
+}
+
+.oz-btn--primary:hover {
+  background: #02f39d;
+  box-shadow: 0 8px 24px rgba(0, 217, 139, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Secondary: Outline + Emerald Glow */
+.oz-btn--secondary {
+  background: rgba(9, 44, 38, 0.6);
+  color: #FCFEFF;
+  border: 1px solid rgba(0, 217, 139, 0.45);
+}
+
+.oz-btn--secondary .oz-btn__circle {
+  background: rgba(0, 217, 139, 0.15);
+  color: #00D98B;
+}
+
+.oz-btn--secondary:hover {
+  border-color: #00D98B;
+  background: rgba(0, 217, 139, 0.12);
+  color: #00D98B;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Right Column (Quick Links Split) */
+.oz-links-split {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+.oz-links-divider {
+  background: rgba(255, 255, 255, 0.15);
+  width: 1px;
+  height: 100%;
+}
+
+.oz-links-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.oz-nav-link {
+  color: rgba(252, 254, 255, 0.8);
+  text-decoration: none;
+  font-family: var(--f-text, 'Switzer', sans-serif);
+  font-size: 0.95rem;
+  transition: color 0.25s ease, transform 0.25s ease;
+  display: inline-block;
+}
+
+.oz-nav-link:hover {
+  color: #00D98B;
+  transform: translateX(4px);
+}
+
+.oz-nav-link--accent {
+  color: #00D98B;
+  font-weight: 500;
+}
+
+/* Bottom Footer Strip */
+.oz-footer-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  padding-top: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.oz-cert-badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-family: var(--f-text, 'Switzer', sans-serif);
+  font-size: 0.85rem;
+  color: rgba(252, 254, 255, 0.7);
+}
+
+.oz-cert-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.oz-cert-check {
+  color: #00D98B;
+  font-weight: bold;
+}
+
+.oz-cert-sep {
+  opacity: 0.4;
+  font-size: 0.6rem;
+}
+
+/* Warm Ivory Legal Capsule */
+.oz-legal-capsule {
+  background: #F7F4E8;
+  color: #092C26;
+  padding: 0.55rem 1.35rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.oz-legal-link {
+  font-family: var(--f-text, 'Switzer', sans-serif);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #092C26;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.oz-legal-link:hover {
+  color: #00875A;
+  text-decoration: underline;
+}
+
+.oz-legal-dot {
+  color: rgba(9, 44, 38, 0.35);
+  font-size: 0.7rem;
+}
+
+.oz-legal-copy {
+  font-family: var(--f-text, 'Switzer', sans-serif);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #092C26;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (TABLET & MOBILE)
+   ========================================================================== */
+@media (max-width: 900px) {
+  .oz-footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+  }
+
+
+}
+
+@media (max-width: 768px) {
+  .oz-footer-outer {
+    padding: 70px 0 0 0;
+  }
+
+  .oz-footer-outer--extra-top {
+    padding-top: 145px;
+  }
+
+  /* Mobile: Birds placement & sizing */
+  .oz-footer-bird {
+    right: 0.30rem;                       /* 👈 MOBILE RIGHT/LEFT: kammi panna right corner-kku pogum */
+    transform: translateY(-75%);         /* 👈 MOBILE TOP/BOTTOM: -75% mela, -60% keela */
+    width: 115px;                        /* 👈 MOBILE SIZE: width */
+    height: 115px;                       /* 👈 MOBILE SIZE: height */
+  }
+
+  .oz-bird-bubble {
+    font-size: 0.74rem;
+    padding: 0.5rem 0.95rem;
+    white-space: normal;
+    max-width: 165px;
+    text-align: center;
+    bottom: 82%;
+    left: 40%;
+    transform: translateX(-50%) translateY(6px) scale(0.92);
+  }
+
+  .oz-bird-bubble.is-visible {
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+
+  .oz-bird-bubble__tip {
+    left: 50%;
+  }
+
+  .oz-footer-panel {
+    border-radius: 28px 28px 0 0;
+    padding: 3.5rem 1.25rem 2rem;
+  }
+
+  /* Mobile: Center emblem logo size increased */
+  .oz-emblem,
+  .oz-emblem--notch {
+    width: 110px;                        /* 👈 MOBILE EMBLEM SIZE: 80px-la irundhu 110px-ku increase panniyirukkom */
+    height: 110px;
+  }
+
+  .oz-brand-center {
+    margin-top: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .oz-footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .oz-col--cta {
+    grid-column: span 1;
+    align-items: stretch;
+    text-align: left;
+    padding: 0;
+  }
+
+  .oz-col__heading--center {
+    text-align: left;
+  }
+
+  .oz-cta-desc {
+    max-width: 100%;
+  }
+
+  .oz-cta-buttons {
+    flex-direction: column;
+    max-width: 100%;
+  }
+
+  .oz-footer-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .oz-cert-badges {
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  .oz-legal-capsule {
+    width: 100%;
+    justify-content: center;
+    padding: 0.65rem 1rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* Reduced Motion Mode */
+@media (prefers-reduced-motion: reduce) {
+  .oz-footer-contours__svg g {
+    transform: none !important;
+    animation: none !important;
+  }
+  .oz-emblem {
+    transition: none !important;
+  }
+}
