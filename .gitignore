@@ -33,6 +33,9 @@ yarn-debug.log*
 yarn-error.log*
 .playwright-cli/
 .cache/
+protected_certificate_viewer.png
+*.png.bak
+*.bak
 
 # OS files
 .DS_Store
