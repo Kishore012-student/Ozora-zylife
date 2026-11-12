@@ -1,6 +1,8 @@
-// API base: replaced at deploy time in hosted previews; empty (same origin) when served by Express or Vite proxy.
+// API base: uses VITE_API_URL if set, or window.__API_BASE__, or empty for same origin
+const envBase = import.meta.env.VITE_API_URL || '';
 const raw = typeof window !== 'undefined' ? window.__API_BASE__ || '' : '';
-export const API_BASE = raw.startsWith('__PORT_') ? '' : raw.replace(/\/$/, '');
+const base = envBase || (raw.startsWith('__PORT_') ? '' : raw);
+export const API_BASE = base.replace(/\/$/, '');
 
 let authToken = null; // kept in memory only
 export const setToken = t => { authToken = t; };
