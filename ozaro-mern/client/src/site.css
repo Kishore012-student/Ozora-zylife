@@ -921,7 +921,7 @@ h3 {
 
 /* ===== Marquee ===== */
 .marquee {
-  padding: clamp(4rem, 8vw, 7rem) 0;
+  padding: 25px;
   overflow: hidden;
   white-space: nowrap
 }
@@ -935,7 +935,7 @@ h3 {
 .marquee__row span {
   font-family: var(--f-display);
   font-weight: 500;
-  font-size: 5rem;
+  font-size: 3.8rem;
   letter-spacing: var(--tr-tight);
   line-height: 1;
   padding-right: .35em;

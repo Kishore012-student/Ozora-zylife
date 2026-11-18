@@ -2,7 +2,6 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { gsap, ScrollTrigger, reduced, fine, revealLines, magnetic, themeTriggers } from '../motion.js';
 import { useContent, useTransition, useSeo, Words, Btn, TLink, sentences, waLink } from '../site.jsx';
 import { api, img } from '../api.js';
-import { createHero } from '../hero3d.js';
 import ProductCard from '../components/ProductCard.jsx';
 import { CtaBand } from '../components/Layout.jsx';
 
@@ -23,8 +22,15 @@ export default function Home() {
     if (!featured) return;
     const el = root.current;
     const heroEl = el.querySelector('.hero');
-    const three = createHero(el.querySelector('#gl'), heroEl);
-    const S = three.S;
+    // Scrub state is created here so every timeline starts immediately; three.js loads
+    // as a lazy chunk and binds to the same state when it arrives (fast first paint on
+    // slow mobile — the capsule intro plays on arrival). Keep in sync with makeHeroState.
+    const S = { rotZ: -0.62, spin: 0, open: 0, burst: 0, helix: 0, ispin: 0, hz: 0, shiftY: 0, hide: 0, camZ: 7.2, shiftX: 0, intro: reduced ? 1 : 0 };
+    let three = null, disposed = false;
+    import('../hero3d.js').then(({ createHero }) => {
+      if (disposed) return;
+      three = createHero(el.querySelector('#gl'), heroEl, S);
+    });
     const heroWords = heroEl.querySelectorAll('.hero__title .wm > span');
     const meta = heroEl.querySelectorAll('.hero__meta > *');
 
@@ -114,7 +120,7 @@ export default function Home() {
           .to(meta, { opacity: 1, y: 0, stagger: 0.1, duration: 1, ease: 'expo.out' }, 0.6);
       });
     });
-    return () => { ctx.revert(); three.destroy(); unFloat(); };
+    return () => { disposed = true; ctx.revert(); three?.destroy(); unFloat(); };
   }, [featured]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const why = c.why || [];

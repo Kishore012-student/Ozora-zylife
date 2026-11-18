@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build output (rebuild with `npm run build` before deploying)
+client/dist/
+
+# Environment / secrets — never commit
+.env
+.env.*
+!.env.example
+
+# Runtime data: embedded MongoDB + uploaded files
+server/data/
+server/uploads/
+
+# Logs
+*.log
+
+# Local verification scripts & screenshots
+client/.verify/
+client/.three-api-check.mjs
+client/.hero-verify.mjs
+server/.gzip-check.mjs
+
+# OS
+Thumbs.db
+.DS_Store
